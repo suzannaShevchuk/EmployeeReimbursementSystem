@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<?xml version="1.0" encoding="UTF-8" ?>
+<title>Reimbursement System</title>
+</head>
+<body>
+
+	<h2>Revature Employee Reimbursement System</h2>
+
+	<h3>Login</h3>
+
+	<form id="login">
+		<label for="username">Username: </label>
+		<input id="username" type="text" name="username" required/>
+		<label for="password">Password: </label>
+		<input id="password" type="password" name="password" required/>
+		<input type="submit" value="Login"/>		
+	</form>
+	
+	<form action="http://localhost:8080/EmployeeReimbursementSystem/resources/html/SignUp.html">
+		<button type="button" id = "signupButton">Don't have an account? Sign up</button>
+	</form>
+	
+
+	<script type="text/javascript">
+	    document.getElementById("signupButton").onclick = function () {
+	        location.href = "http://localhost:8080/EmployeeReimbursementSystem/resources/html/SignUp.html";
+	    };
+	</script>
+		
+	<script src="../js/login.js"></script>
+
+</body>
+</html>
