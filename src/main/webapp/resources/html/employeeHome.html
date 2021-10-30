@@ -1,10 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Employee Page</title>
+<?xml version="1.0" encoding="UTF-8" ?>
+<title>Employee Home Page</title>
 </head>
 <body>
+	<div>
+		<button type="button" id ="logout">Logout</button>
+	</div>
+	
+	<div>
+		<button type="button" id ="account">Settings</button>
+	</div>
+		
+	<h2>Welcome to the reimbursement portal!</h2>
+	
+	<div>What would you like to do?</div>
+
+<button type="button" id="pendingReq">View your pending reimbursement requests</button>
+<button type="button" id="resolvedReq">View your resolved reimbursement requests</button>
+<button type ="button" id="newRequest">Create a new reimbursement request</button>
+
+	<div id="reimbursement-container">
+	
+	</div>
+
+	
+	<form id="createR">
+		<h3>Create Reimbursement</h3>
+		<label for="amount">Amount: </label>
+		<input id="amount" type="number"  name="amount" required/>
+		<label for="description">Description: </label>
+		<input id="description" type="text" name="description" required/>
+		<select name="typereim" id="type">
+		  <option value="lodging" >Lodging</option>
+		  <option value="travel">Travel</option>
+		  <option value="food">Food</option>
+		  <option value="other">Other</option>
+		</select>	
+		<input type="submit" value="Submit"/>
+	</form>
+	
+
+	<script src = "../js/employeeChoice.js"></script>
+
+		<script type="text/javascript">
+	    document.getElementById("account").onclick = function () {
+	        location.href = "http://localhost:8080/EmployeeReimbursementSystem/resources/html/accountPage.html";
+	    };
+	</script>
 
 </body>
 </html>

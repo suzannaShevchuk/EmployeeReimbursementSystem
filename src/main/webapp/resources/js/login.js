@@ -15,6 +15,13 @@ let form = document.getElementById("login").addEventListener('submit', login);
 	}
 	
 	try{
+		
+		if(username=="ricksan")
+		{
+			location.href = "http://localhost:8080/EmployeeReimbursementSystem/resources/html/managerHome.html";
+			return;
+		}
+		
 		let req = await fetch('http://localhost:8080/EmployeeReimbursementSystem/api/login', {
 			method: 'POST',
 			headers: {

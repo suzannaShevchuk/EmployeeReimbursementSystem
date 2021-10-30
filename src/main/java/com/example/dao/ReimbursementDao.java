@@ -25,4 +25,6 @@ public interface ReimbursementDao {
 	List<Reimbursement> getAllReimbursementsUser(int authorId);
 	
 	Reimbursement findReimbursement(int reimbId);
+
+	List<Reimbursement> getAllReimbursementsUserStat(int authorId, String stat);
 }

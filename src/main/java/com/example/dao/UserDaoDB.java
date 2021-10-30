@@ -144,4 +144,37 @@ public class UserDaoDB implements UserDao {
 		
 	}
 
+	@Override
+	public User getUserByID(int id) {
+
+		User user = new User();
+		
+		try {
+			Connection con = conUtil.getConnection();
+			
+			String sql = "SELECT * FROM users WHERE users.id = '" + id + "'";
+			
+			Statement s = con.createStatement();
+			ResultSet rs = s.executeQuery(sql);
+			
+			while(rs.next()) {
+				user.setId(rs.getInt(1));
+				user.setUsername(rs.getString(2));
+				user.setPassword(rs.getString(3));
+				user.setFirstName(rs.getString(4));
+				user.setLastName(rs.getString(5));
+				user.setEmail(rs.getString(6));
+				user.setUserRoleId(rs.getInt(7));
+			}
+			
+			
+			return user;
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 }

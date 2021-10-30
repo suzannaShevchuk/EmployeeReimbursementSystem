@@ -10,11 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.example.dao.ReimbursementDao;
 import com.example.dao.ReimbursementDaoDB;
+import com.example.logging.Logging;
 import com.example.models.Reimbursement;
+import com.example.models.User;
 import com.example.services.ReimbursementService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class ReimbursementController {
 
@@ -109,12 +113,141 @@ public class ReimbursementController {
 		}
 	}
 
-	public static void addReimbursement(HttpServletRequest req, HttpServletResponse res) {
+	public static void addReimbursement(HttpServletRequest req, HttpServletResponse res) throws JsonProcessingException, IOException {
 		
+		StringBuilder buffer = new StringBuilder();
+
+		BufferedReader reader = req.getReader();
+		
+		String line;
+		while((line = reader.readLine()) != null) {
+			buffer.append(line);
+			buffer.append(System.lineSeparator());
+		}
+		
+		String data = buffer.toString();
+		System.out.println(data);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode parsedObj = mapper.readTree(data);
+		
+		double amount = parsedObj.get("amount").asDouble();
+		String description = parsedObj.get("description").asText();
+		
+		//String typeR = parsedObj.get("type").asText();
+		String type = parsedObj.get("type").textValue();
+				
+		int author = (int) req.getSession().getAttribute("id");
+		
+		int typeId = 0;
+		
+		if(type.equals("lodging"))
+		{
+			typeId = 1;
+		}
+		else if(type.equals("travel"))
+		{
+			typeId=2;
+		}
+		else if(type.equals("food"))
+		{
+			typeId=3;
+		}
+		else if(type.equals("other"))
+		{
+			typeId=4;
+		}
+		try {
+			System.out.println("In the create reimbursement handler :)");
+			Reimbursement r = rServ.createReimbursement(amount, description, typeId, author);
+			System.out.println(r);
+			Logging.logger.info("User successfully created reimbursement");
+			res.setStatus(200);
+			res.getWriter().write(new ObjectMapper().writeValueAsString(r));			
+		}catch(Exception e) {
+			res.setStatus(403);
+			Logging.logger.warn("User tried creating reimbursement unsuccessfully");
+		}
 	}
 	
-	public static void updateReimbursement(HttpServletRequest req, HttpServletResponse res) {
+	public static void updateReimbursement(HttpServletRequest req, HttpServletResponse res) throws JsonProcessingException, IOException{
 		
+		StringBuilder buffer = new StringBuilder();
+		
+		BufferedReader reader = req.getReader();
+		
+		String line;
+		while((line = reader.readLine()) != null) {
+			buffer.append(line);
+			buffer.append(System.lineSeparator());
+		}
+		
+		String data = buffer.toString();
+		System.out.println(data);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode parsedObj = mapper.readTree(data);
+		
+		int id = parsedObj.get("rid").asInt();
+		String stat = parsedObj.get("stat").asText();
+		
+		int status = 0;
+		if(stat=="accept")
+		{
+			//accepted status
+			status = 2;
+		}
+		else {
+			//denied status
+			status = 3;
+		}
+		try {
+		System.out.println("In the status update handler");
+		Reimbursement r = rServ.findReimbursement(id);
+		r.setStatus_id(id);
+		rServ.updateStatus(r);
+		res.setStatus(200);
+		res.getWriter().write(new ObjectMapper().writeValueAsString(r));
+		}catch(Exception e) {
+			res.setStatus(403);
+			res.getWriter().println("Reimbursement with that id doesn't exist");
+			Logging.logger.warn("Manager tried updating reimbursement with non existent reimbursement id");
+		}
 	}
 	
+	
+public static void getAllUserReimbsPending(HttpServletRequest req, HttpServletResponse res) {
+		
+		String json;
+		
+		try {
+		
+		int userId =  (int) req.getSession().getAttribute("id");
+		List<Reimbursement> allUR = rDao.getAllReimbursementsUserStat(userId, "pending");
+		res.getWriter().write(new ObjectMapper().writeValueAsString(allUR));
+		
+		}catch(Exception e)
+		{
+			System.out.println("User ID doesn't exist");
+			e.printStackTrace();
+		}
+	}
+	
+
+public static void getAllUserReimbsResolved(HttpServletRequest req, HttpServletResponse res) {
+	
+	String json;
+	
+	try {
+	
+	int userId = (int) req.getSession().getAttribute("id");
+	List<Reimbursement> allUR = rDao.getAllReimbursementsUserStat(userId, "other");
+	res.getWriter().write(new ObjectMapper().writeValueAsString(allUR));
+	
+	}catch(Exception e)
+	{
+		System.out.println("User ID doesn't exist");
+		e.printStackTrace();
+	}
+}
 }

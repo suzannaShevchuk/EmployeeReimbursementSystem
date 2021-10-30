@@ -253,4 +253,58 @@ public class ReimbursementDaoDB implements ReimbursementDao{
 		return null;
 	}
 
+	@Override
+	public List<Reimbursement> getAllReimbursementsUserStat(int authorId, String stat) {
+		List<Reimbursement> reimbList = new ArrayList<Reimbursement>();
+		
+		if(stat == "pending") {
+		try {
+			//Make the actual connection to the db
+			Connection con = conUtil.getConnection();
+			
+			//Create a simple statement
+			String sql = "SELECT * FROM reimbursements WHERE reimbursements.author_id = '" + authorId + "' AND reimbursements.status_id = 1";
+			
+			//We need to create a statement with the sql string
+			Statement s = con.createStatement();
+			ResultSet rs = s.executeQuery(sql);
+			
+			//We have to loop through the ResultSet and create objects based off the return
+			while(rs.next()) {
+				reimbList.add(new Reimbursement(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9)));
+			}
+			
+			return reimbList;
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}		
+		}
+		else {
+			try {
+				//Make the actual connection to the db
+				Connection con = conUtil.getConnection();
+				
+				//Create a simple statement
+				String sql = "SELECT * FROM reimbursements WHERE reimbursements.author_id = '" + authorId + "' AND reimbursements.status_id != 1";
+				
+				//We need to create a statement with the sql string
+				Statement s = con.createStatement();
+				ResultSet rs = s.executeQuery(sql);
+				
+				//We have to loop through the ResultSet and create objects based off the return
+				while(rs.next()) {
+					reimbList.add(new Reimbursement(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9)));
+				}
+				
+				return reimbList;
+				
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}		
+		}
+		return null;
+	}
+	
+	
 }

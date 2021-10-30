@@ -11,6 +11,7 @@ async function signup(e){
 	let last = document.getElementById("last").value;
 	let email = document.getElementById("email").value;
 	
+	
 	let user = {
 		username,
 		password,

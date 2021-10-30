@@ -27,7 +27,6 @@ public class Driver {
 
 	public static void main(String[] args) throws UserDoesNotExistException, InvalidCredentialsException {
 		
-		uServ.signUp("suzanna", "shev", "s@mail.com", "suzy", "123", 1);
 
 	}
 

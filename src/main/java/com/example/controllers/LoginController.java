@@ -3,6 +3,7 @@ package com.example.controllers;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -52,8 +53,11 @@ public class LoginController {
 			Logging.logger.info("User logged in");
 			//We will keep track of if a user is signed in by storing their id in the session
 			req.getSession().setAttribute("id", u.getId());
+			//req.getSession().setAttribute("role", u.getUserRoleId());
 			res.setStatus(200);
 			res.getWriter().write(new ObjectMapper().writeValueAsString(u));
+			
+			
 		} catch(Exception e) {
 			res.setStatus(403);
 			res.getWriter().println("Username or password incorrect");
@@ -63,7 +67,7 @@ public class LoginController {
 	}
 	
 	public static void logout(HttpServletRequest req, HttpServletResponse res) throws JsonProcessingException, IOException {
-		
+		req.getSession().setAttribute("id", null);
 	}
 
 }
