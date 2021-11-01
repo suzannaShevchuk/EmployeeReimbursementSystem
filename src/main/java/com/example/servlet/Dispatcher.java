@@ -47,6 +47,21 @@ public class Dispatcher {
 		case "/EmployeeReimbursementSystem/api/logout":
 			LoginController.logout(req, res);
 			break;
+		case "/EmployeeReimbursementSystem/api/statusReim":
+			ReimbursementController.updateReimbursement(req, res);
+			break;
+		case "/EmployeeReimbursementSystem/api/allPend":
+			ReimbursementController.getAllPending(req, res);
+			break;
+		case "/EmployeeReimbursementSystem/api/allRes":	
+			ReimbursementController.getAllResolved(req, res);
+			break;
+		case "/EmployeeReimbursementSystem/api/allEmploy":	
+			AccountController.getAllUsers(req, res);
+			break;	
+		case "/EmployeeReimbursementSystem/api/userReimbs":
+			ReimbursementController.getAllUserReimbs(req, res);
+			break;
 	}
 		
 	}

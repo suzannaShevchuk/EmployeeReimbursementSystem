@@ -3,29 +3,31 @@
 <head>
 <?xml version="1.0" encoding="UTF-8" ?>
 <title>Sign Up</title>
-
+<link rel="stylesheet" href="../css/signup.css">
+ <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
 <body>
 
-	<h2>Revature Employee Reimbursement System</h2>
-
-	<h3>Sign Up</h3>
+	<h2>Employee Reimbursement System</h2>
+<div class = "main">
+	<h3 id = "signupH">Sign Up</h3>
 
 		<form id="signup">
 		
-		<label for="username">Username: </label>
-		<input id="username" type="text" name="username" required/>
-		<label for="password">Password: </label>
-		<input id="password" type="password" name="password" required/>
-		<label for="first">First Name: </label>
-		<input id="first" type="text" name="first" required/>
-		<label for="last">Last Name: </label>
-		<input id="last" type="text" name="last" required/>
-		<label for="email">Email: </label>
-		<input id="email" type="text" name="email" required/>		
-		<input type="submit" value="Sign Up"/>
-		</form>
+
+		<input class = "text" autocomplete="off" id="username" type="text" placeholder="Username" name="username" required/>
 	
+		<input class = "text" autocomplete="off" id="password" type="password" placeholder="Password" name="password" required/>
+
+		<input class = "text" autocomplete="off" id="first" type="text" placeholder="First Name" name="first" required/>
+	
+		<input class = "text" autocomplete="off" id="last" type="text" placeholder="Last Name" name="last" required/>
+	
+		<input  class = "text" autocomplete="off"  id="email" type="text" placeholder="Email" name="email" required/>
+				<br>		
+		<input type="submit" class = "submit" value="Sign Up"/>
+		</form>
+	</div>
 		<script src="../js/signup.js"></script>
 </body>
 </html>

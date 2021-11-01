@@ -3,43 +3,42 @@
 <head>
 <?xml version="1.0" encoding="UTF-8" ?>
 <title>Employee Home Page</title>
+<link rel="stylesheet" href="../css/employee.css">
+ <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
 <body>
-	<div>
-		<button type="button" id ="logout">Logout</button>
-	</div>
-	
-	<div>
-		<button type="button" id ="account">Settings</button>
-	</div>
+
 		
 	<h2>Welcome to the reimbursement portal!</h2>
 	
-	<div>What would you like to do?</div>
+	<div class = "gene">
+		<button class = "gen" type="button" id ="logout">Logout</button>	
+		<button class = "gen" type="button" id ="account">Settings</button>
+	</div>
+	
+	<h3>What would you like to do?</h3>
 
-<button type="button" id="pendingReq">View your pending reimbursement requests</button>
-<button type="button" id="resolvedReq">View your resolved reimbursement requests</button>
-<button type ="button" id="newRequest">Create a new reimbursement request</button>
+<button class = "button" type="button" id="pendingReq">View your pending reimbursement requests</button><br><br>
+<button  class = "button"  type="button" id="resolvedReq">View your resolved reimbursement requests</button>
 
 	<div id="reimbursement-container">
 	
 	</div>
 
-	
+	<div class = "main">
 	<form id="createR">
-		<h3>Create Reimbursement</h3>
-		<label for="amount">Amount: </label>
-		<input id="amount" type="number"  name="amount" required/>
-		<label for="description">Description: </label>
-		<input id="description" type="text" name="description" required/>
-		<select name="typereim" id="type">
+		<h3 class = "create">Create Reimbursement</h3>
+		<input class = "text" id="amount" type="number"  placeholder="Amount"   name="amount" autocomplete="off" required/><br>
+		<input class = "text" autocomplete="off" id="description" type="text"  placeholder="Description" name="description" required/><br>
+		<select class = "text" name="typereim" id="type">
 		  <option value="lodging" >Lodging</option>
 		  <option value="travel">Travel</option>
 		  <option value="food">Food</option>
 		  <option value="other">Other</option>
-		</select>	
-		<input type="submit" value="Submit"/>
+		</select>	<br>
+		<input class = "submit" type="submit" value="Submit"/>
 	</form>
+	</div>
 	
 
 	<script src = "../js/employeeChoice.js"></script>

@@ -1,4 +1,4 @@
-isManager();
+
 
 let pending = document.getElementById("pendingReq").addEventListener('click', pendingCheck);
 
@@ -8,7 +8,14 @@ let create = document.getElementById("createR").addEventListener('submit', creat
 
 let container = document.getElementById("reimbursement-container");
 
+let logoutB = document.getElementById("logout").addEventListener('click', logout);
+
+
+	async function logout(){
+	let req = await fetch('http://localhost:8080/EmployeeReimbursementSystem/api/logout');	
 	
+    location.href = "http://localhost:8080/EmployeeReimbursementSystem/resources/html/Login.html";
+}
 	
 	async function pendingCheck(){
 			let res = await fetch('http://localhost:8080/EmployeeReimbursementSystem/api/pending');
@@ -51,33 +58,29 @@ let container = document.getElementById("reimbursement-container");
 	}
 	
 	function populatePendingReq(data){
+		container.innerHTML = '';
 		for(postObj of data){
 		let reimbursement = document.createElement('div');
-		reimbursement.innerHTML = `<h2>${postObj.amount}</h2>
-						  <p>${postObj.description}</p>
-						  <p>${postObj.submitted}</p>
-						  <p>${postObj.author_id}</p>`;
+		reimbursement.innerHTML = `<h4>Amount: $${postObj.amount}</h4>
+						  <p>Description: ${postObj.description}</p>
+						  <p>Submitted: ${postObj.submitted}</p>
+						  <p>Author ID: ${postObj.author_id}</p>`;
 		console.log(reimbursement);				  
 		container.append(reimbursement);
 	}	
  }
 	
 	function populateResolvedReq(data){
+		container.innerHTML = '';
 			for(postObj of data){
 		let reimbursement = document.createElement('div');
-		reimbursement.innerHTML = `<h2>${postObj.amount}</h2>
-						  <p>${postObj.description}</p>
-						  <p>${postObj.submitted}</p>
-						  <p>${postObj.resolved}</p>
-						  <p>${postObj.author_id}</p>
-						  <p>${postObj.resolved_id}</p>`;
+		reimbursement.innerHTML = `<h4>Amount: $${postObj.amount}</h4>
+						  <p>Description: ${postObj.description}</p>
+						  <p>Submitted: ${postObj.submitted}</p>
+						  <p>Resolved: ${postObj.resolved}</p>
+						  <p>Author ID: ${postObj.author_id}</p>`;
 		console.log(reimbursement);				  
 		container.append(reimbursement);
 	}
 	}
 	
-	
-	function account(){
-		
-		
-	}

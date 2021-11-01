@@ -53,7 +53,7 @@ public class LoginController {
 			Logging.logger.info("User logged in");
 			//We will keep track of if a user is signed in by storing their id in the session
 			req.getSession().setAttribute("id", u.getId());
-			//req.getSession().setAttribute("role", u.getUserRoleId());
+			req.getSession().setAttribute("role", u.getUserRoleId());
 			res.setStatus(200);
 			res.getWriter().write(new ObjectMapper().writeValueAsString(u));
 			

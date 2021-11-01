@@ -35,7 +35,7 @@ function showUser(data){
  async function updateUser(){	
    container.innerHTML = '';
 
-	try{
+	
 	let username = document.getElementById("username").value;
 	let password = document.getElementById("password").value;
 	let first = document.getElementById("first").value;
@@ -60,9 +60,6 @@ function showUser(data){
 		let res = await req.json();
 		getUser();
 		location.href = '../html/employeeHome.html';
-		}catch(e){
-		alert("User info didn't change");
-		return;
-	}
+		
 	
 }

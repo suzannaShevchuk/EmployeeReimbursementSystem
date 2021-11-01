@@ -79,6 +79,36 @@ public class ReimbursementDaoDB implements ReimbursementDao{
 	}
 
 	
+	@Override
+	public List<Reimbursement> getAllReimbursementResolved() {
+
+		List<Reimbursement> reimbList = new ArrayList<Reimbursement>();
+		
+		try {
+			//Make the actual connection to the db
+			Connection con = conUtil.getConnection();
+			
+			//Create a simple statement
+			String sql = "SELECT * FROM reimbursements WHERE reimbursements.status_id = 2 OR reimbursements.status_id = 3";
+			
+			//We need to create a statement with the sql string
+			Statement s = con.createStatement();
+			ResultSet rs = s.executeQuery(sql);
+			
+			//We have to loop through the ResultSet and create objects based off the return
+			while(rs.next()) {
+				reimbList.add(new Reimbursement(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9)));
+			}
+			
+			return reimbList;
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}		
+		return null;
+	}
+	
+	
 	
 	@Override
 	public void createReimbursement(Reimbursement r) throws SQLException {

@@ -78,40 +78,6 @@ public class ReimbursementController {
 		}
 	}
 	
-	public static void getAllReimbStat(HttpServletRequest req, HttpServletResponse res) {
-		String json;
-		
-		try {
-		
-		//To read stringified JSON data
-		StringBuilder buffer = new StringBuilder();
-		BufferedReader reader = req.getReader();
-		
-		String line;
-		while((line = reader.readLine()) != null) {
-			buffer.append(line);
-			buffer.append(System.lineSeparator());
-		}
-		
-		String data = buffer.toString();
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode parsedObj = mapper.readTree(data);
-		
-		int statId = Integer.parseInt(parsedObj.get("statId").asText());
-		
-		List<Reimbursement> allSR = rServ.getAllStat(statId);
-		ObjectMapper om = new ObjectMapper();
-		ObjectWriter ow = om.writer().withDefaultPrettyPrinter();
-		json = ow.writeValueAsString(allSR);
-		PrintWriter writer = res.getWriter();
-		writer.write(json);
-		
-		}catch(Exception e)
-		{
-			System.out.println("Stat ID doesn't exist");
-			e.printStackTrace();
-		}
-	}
 
 	public static void addReimbursement(HttpServletRequest req, HttpServletResponse res) throws JsonProcessingException, IOException {
 		
@@ -160,7 +126,6 @@ public class ReimbursementController {
 		try {
 			System.out.println("In the create reimbursement handler :)");
 			Reimbursement r = rServ.createReimbursement(amount, description, typeId, author);
-			System.out.println(r);
 			Logging.logger.info("User successfully created reimbursement");
 			res.setStatus(200);
 			res.getWriter().write(new ObjectMapper().writeValueAsString(r));			
@@ -171,6 +136,7 @@ public class ReimbursementController {
 	}
 	
 	public static void updateReimbursement(HttpServletRequest req, HttpServletResponse res) throws JsonProcessingException, IOException{
+		System.out.println("IN");
 		
 		StringBuilder buffer = new StringBuilder();
 		
@@ -188,11 +154,11 @@ public class ReimbursementController {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode parsedObj = mapper.readTree(data);
 		
-		int id = parsedObj.get("rid").asInt();
-		String stat = parsedObj.get("stat").asText();
+		int id = parsedObj.get("id").asInt();
+		String stat = parsedObj.get("stat").textValue();
 		
 		int status = 0;
-		if(stat=="accept")
+		if(stat.equals("accept"))
 		{
 			//accepted status
 			status = 2;
@@ -204,11 +170,13 @@ public class ReimbursementController {
 		try {
 		System.out.println("In the status update handler");
 		Reimbursement r = rServ.findReimbursement(id);
-		r.setStatus_id(id);
+		r.setStatus_id(status);
 		rServ.updateStatus(r);
+		System.out.println(r);
 		res.setStatus(200);
 		res.getWriter().write(new ObjectMapper().writeValueAsString(r));
-		}catch(Exception e) {
+		    }
+		catch(Exception e) {
 			res.setStatus(403);
 			res.getWriter().println("Reimbursement with that id doesn't exist");
 			Logging.logger.warn("Manager tried updating reimbursement with non existent reimbursement id");
@@ -218,7 +186,6 @@ public class ReimbursementController {
 	
 public static void getAllUserReimbsPending(HttpServletRequest req, HttpServletResponse res) {
 		
-		String json;
 		
 		try {
 		
@@ -233,6 +200,17 @@ public static void getAllUserReimbsPending(HttpServletRequest req, HttpServletRe
 		}
 	}
 	
+public static void getAllPending(HttpServletRequest req, HttpServletResponse res) throws JsonProcessingException, IOException {
+	List<Reimbursement> allUR = rDao.getAllReimbursementsStatus(1);
+	res.getWriter().write(new ObjectMapper().writeValueAsString(allUR));
+	
+}
+
+public static void getAllResolved(HttpServletRequest req, HttpServletResponse res) throws JsonProcessingException, IOException {
+	List<Reimbursement> allUR = rDao.getAllReimbursementResolved();
+	res.getWriter().write(new ObjectMapper().writeValueAsString(allUR));
+}
+
 
 public static void getAllUserReimbsResolved(HttpServletRequest req, HttpServletResponse res) {
 	

@@ -3,32 +3,40 @@
 <head>
 <?xml version="1.0" encoding="UTF-8" ?>
 <title>Account Settings</title>
+<link rel="stylesheet" href="../css/account.css">
+ <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
 <body>
 
+	<div>
+		<button type="button" class = "gen" id ="logout">Logout</button>
+	</div>
+
 	<h2>Account Settings</h2>
+
 	
 	<div id = "user-container">
 		
 	</div>
-	
+	<div class = "main">
+	<h3 id = "accH">Update Account</h3>
 	<form id="updateAccount">
 		
-		<label for="username">Username: </label>
-		<input id="username" type="text" name="username" required/>
-		<label for="password">Password: </label>
-		<input id="password" type="password" name="password" required/>
-		<label for="first">First Name: </label>
-		<input id="first" type="text" name="first" required/>
-		<label for="last">Last Name: </label>
-		<input id="last" type="text" name="last" required/>
-		<label for="email">Email: </label>
-		<input id="email" type="text" name="email" required/>		
-		<input type="submit" value="Update Account"/>
+		<input class = "text" id="username" type="text" placeholder="Username" name="username" autocomplete="off" required/>
+	
+		<input class = "text" id="password" type="password" placeholder="Password" name="password" autocomplete="off" required/>
+
+		<input class = "text" id="first" type="text" placeholder="First Name" name="first" autocomplete="off" required/>
+	
+		<input class = "text" id="last" type="text" placeholder="Last Name" name="last" autocomplete="off" required/>
+	
+		<input  class = "text"  id="email" type="text" placeholder="Email" name="email" autocomplete="off" required/>
+				<br>			
+		<input type="submit" class = "submit" value="Update Account"/>
 		
 	</form>
-		
-		<script src = "../js/userInfo.js"></script>
+		</div>
+		<script src = "../js/user.js"></script>
 
 </body>
 </html>
